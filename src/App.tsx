@@ -192,6 +192,20 @@ function App() {
                     </div>
                     {FIVE * 2}
                   </button>
+                  <button
+                    onClick={() => {
+                      changeScore(FIVE * 3, i);
+                    }}
+                    className="relative h-full w-[20px] flex items-center justify-center text-white text-[12px] bg-orange-400 border-r border-black border-solid"
+                    style={{
+                      opacity: scoreList[i] === FIVE * 3 ? 1 : 0.6,
+                    }}
+                  >
+                    <div className="absolute top-1 text-black text-[10px]">
+                      {scoreList[i] === FIVE * 3 ? "v" : ""}
+                    </div>
+                    {FIVE * 3}
+                  </button>
                 </div>
               </div>
             ))}
