@@ -13,8 +13,9 @@ function App() {
   const [score, setScore] = useState(0);
   const [home, setHome] = useState(true);
   const changeOMR = (i: number, j: number) => {
-    const tmp = omr;
-    tmp[i][j] = !tmp[i][j];
+    const tmp = omr.map((row, p) =>
+      row.map((li, q) => (p === i && q === j ? !li : li))
+    );
     setOmr(tmp);
     setScore(calcScore(tmp));
   };
@@ -31,32 +32,28 @@ function App() {
   };
   const addAnswer = () => {
     if (num < 10) {
-      setNum((n) => n + 1);
+      const n = num;
+      setNum(n + 1);
       const tmp = answer;
       tmp.push(Array(FIVE).fill(false));
       setAnswer(tmp);
       const sl = scoreList;
       sl.push(FIVE);
       setScoreList(sl);
-      const o = omr;
-      o.push(Array(FIVE).fill(false));
-      setOmr(o);
-      setScore(0);
+      reset(n + 1);
     }
   };
   const subAnswer = () => {
     if (num > 1) {
-      setNum((n) => n - 1);
+      const n = num;
+      setNum(n - 1);
       const tmp = answer;
       tmp.pop();
       setAnswer(tmp);
       const sl = scoreList;
       sl.pop();
       setScoreList(sl);
-      const o = omr;
-      o.pop();
-      setOmr(o);
-      setScore(0);
+      reset(n - 1);
     }
   };
   const changeScore = (s: number, i: number) => {
