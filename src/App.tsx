@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function App() {
   const FIVE = 5;
@@ -13,9 +13,8 @@ function App() {
   const [score, setScore] = useState(0);
   const [home, setHome] = useState(true);
   const changeOMR = (i: number, j: number) => {
-    const tmp = omr.map((row, p) =>
-      row.map((li, q) => (p === i && q === j ? !li : li))
-    );
+    const tmp = omr;
+    tmp[i][j] = !tmp[i][j];
     setOmr(tmp);
     setScore(calcScore(tmp));
   };
@@ -39,6 +38,10 @@ function App() {
       const sl = scoreList;
       sl.push(FIVE);
       setScoreList(sl);
+      const o = omr;
+      o.push(Array(FIVE).fill(false));
+      setOmr(o);
+      setScore(0);
     }
   };
   const subAnswer = () => {
@@ -50,6 +53,10 @@ function App() {
       const sl = scoreList;
       sl.pop();
       setScoreList(sl);
+      const o = omr;
+      o.pop();
+      setOmr(o);
+      setScore(0);
     }
   };
   const changeScore = (s: number, i: number) => {
@@ -73,9 +80,6 @@ function App() {
     }
     return res;
   };
-  useEffect(() => {
-    reset(num);
-  }, [num]);
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
       {home ? (
