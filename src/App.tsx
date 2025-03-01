@@ -12,6 +12,7 @@ function App() {
   const [scoreList, setScoreList] = useState([FIVE]);
   const [score, setScore] = useState(0);
   const [home, setHome] = useState(true);
+  const [wrong, setWrong] = useState(false);
   const changeOMR = (i: number, j: number) => {
     const tmp = omr.map((row, p) =>
       row.map((li, q) => (p === i && q === j ? !li : li))
@@ -77,6 +78,15 @@ function App() {
     }
     return res;
   };
+  const isZero = (index: number) => {
+    let zero = true;
+    for (let i = 0; i < 5; i++) {
+      if (omr[index][i]) {
+        zero = false;
+      }
+    }
+    return zero;
+  };
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
       {home ? (
@@ -104,9 +114,13 @@ function App() {
                     onClick={() => {
                       changeOMR(i, j);
                     }}
-                    className="w-10 h-10 rounded-full border border-black border-solid"
+                    className="w-10 h-10 relative flex justify-center items-center rounded-full border border-black border-solid"
                     style={{ backgroundColor: stat ? "black" : "white" }}
-                  ></button>
+                  >
+                    {wrong && (stat != answer[i][j] || isZero(i)) ? (
+                      <div className="w-5 h-5 absolute bg-red-500 rounded-full"></div>
+                    ) : null}
+                  </button>
                 ))}
               </div>
             ))}
@@ -119,6 +133,19 @@ function App() {
             className="p-3 rounded-[10px] font-bold text-[18px] text-white bg-orange-400"
           >
             초기화
+          </button>
+          <div className="h-[20px]"></div>
+          <button
+            onClick={() => {
+              setWrong((w) => !w);
+            }}
+            className="flex justify-center items-center gap-2"
+          >
+            <div
+              className="h-4 w-4 border border-solid border-black"
+              style={{ backgroundColor: wrong ? "black" : "white" }}
+            ></div>
+            <p>틀린 문항 표시</p>
           </button>
           <div className="flex-grow"></div>
         </>
